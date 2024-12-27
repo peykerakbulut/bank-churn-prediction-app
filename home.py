@@ -115,14 +115,14 @@ with st.sidebar:
 # Sayfa yönlendirmesi
 try:
     if st.session_state.section == "Project Description":
-        import pages.project as project
+        import pages._project as project
     elif st.session_state.section == "About DataSet":
-        import pages.dataset as dataset
+        import pages._dataset as dataset
     elif st.session_state.section == "Project Charts":
-        import pages.charts as charts
+        import pages._charts as charts
     elif st.session_state.section == "Evaluation":
-        import pages.evaluation as evaluation
+        import pages._evaluation as evaluation
     elif st.session_state.section == "Prediction":
-        import pages.predict as predict
+        import pages._predict as predict
 except Exception as e:
     st.error(f"Hata: {e}")
