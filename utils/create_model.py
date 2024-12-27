@@ -5,10 +5,17 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import LabelEncoder
 import shap
 import pickle
-import matplotlib.pyplot as plt
+import os
+
+# Klasör yollarını oluştur
+MODELS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'models')
+DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data')
+
+# models klasörünü oluştur
+os.makedirs(MODELS_DIR, exist_ok=True)
 
 # Veriyi yükle
-df = pd.read_csv("customer_churn_records.csv")
+df = pd.read_csv(os.path.join(DATA_DIR, "customer_churn_records.csv"))
 
 # Feature isimlerini düzenle
 feature_names = {
@@ -70,19 +77,22 @@ try:
 except Exception as e:
     print("Error calculating SHAP values:", e)
 
-# Feature names'i kaydet
-with open('feature_names.pkl', 'wb') as file:
-    pickle.dump(feature_names, file)
+# Dosyaları kaydet
+model_path = os.path.join(MODELS_DIR, 'model.pkl')
+explainer_path = os.path.join(MODELS_DIR, 'explainer.pkl')
+feature_names_path = os.path.join(MODELS_DIR, 'feature_names.pkl')
+label_encoders_path = os.path.join(MODELS_DIR, 'label_encoders.pkl')
 
-# Model ve explainer'ı kaydet
-with open('model.pkl', 'wb') as file:
+with open(model_path, 'wb') as file:
     pickle.dump(model, file)
 
-with open('explainer.pkl', 'wb') as file:
+with open(explainer_path, 'wb') as file:
     pickle.dump(explainer, file)
 
-# Label encoder'ları kaydet
-with open('label_encoders.pkl', 'wb') as file:
+with open(feature_names_path, 'wb') as file:
+    pickle.dump(feature_names, file)
+
+with open(label_encoders_path, 'wb') as file:
     pickle.dump(label_encoders, file)
 
 print("Model, explainer, encoders and feature names saved successfully!")

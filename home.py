@@ -8,7 +8,7 @@ st.set_page_config(
     page_icon="images/data_scientist_badge.png",
     layout="wide",
     initial_sidebar_state="expanded",
-    menu_items=None  # Bu satırı ekleyelim
+    menu_items=None
 )
 
 
@@ -79,6 +79,15 @@ st.markdown("""
         justify-content: flex-start !important;
         gap: 10px !important;
     }
+
+    /* Varsayılan menüyü gizle */
+    #MainMenu {visibility: hidden;}
+    header {visibility: hidden;}
+    [data-testid="collapsedControl"] {display: none;}
+    
+    /* Pages sekmesini gizle */
+    section[data-testid="stSidebar"] > div.css-1d391kg {display: none;}
+    
     </style>
 """, unsafe_allow_html=True)
 
@@ -93,7 +102,7 @@ with st.sidebar:
     
     # Navigation menüsü
     menu_items = {
-        "Project Description": "📝",
+        "Homepage": "🏠",
         "About DataSet": "📊",
         "Project Charts": "📈",
         "Evaluation": "📋",
@@ -102,7 +111,7 @@ with st.sidebar:
     
     # Initialize session state for section if not exists
     if 'section' not in st.session_state:
-        st.session_state.section = "Project Description"
+        st.session_state.section = "Homepage"
     
     # Navigation buttons
     for page, icon in menu_items.items():
@@ -112,15 +121,16 @@ with st.sidebar:
 
 # Sayfa yönlendirmesi
 try:
-    if st.session_state.section == "Project Description":
-        import pages._project as project
+    if st.session_state.section == "Homepage":
+        import modules.project as project
     elif st.session_state.section == "About DataSet":
-        import pages._dataset as dataset
+        import modules.dataset as dataset
     elif st.session_state.section == "Project Charts":
-        import pages._charts as charts
+        import modules.charts as charts
     elif st.session_state.section == "Evaluation":
-        import pages._evaluation as evaluation
+        import modules.evaluation as evaluation
     elif st.session_state.section == "Prediction":
-        import pages._predict as predict
+        import modules.predict as predict
+        predict.predict_page()
 except Exception as e:
     st.error(f"Hata: {e}")
