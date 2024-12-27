@@ -3,6 +3,8 @@ import pandas as pd
 import numpy as np
 import pickle
 import os
+import shap
+import matplotlib.pyplot as plt
 
 def load_model():
     try:
@@ -103,6 +105,41 @@ def predict_page():
                         'Probability': [f"{probability[0]:.2%}", f"{probability[1]:.2%}"]
                     })
                     st.table(prob_df)
+                    
+                    # SHAP değerlerini hesapla ve göster
+                    try:
+                        # SHAP değerlerini hesapla
+                        explainer = shap.TreeExplainer(model)
+                        
+                        # Explanation objesi oluştur - positive class (1) için SHAP değerlerini al
+                        shap_values = explainer(input_df)
+                        
+                        st.write("\n### Feature Contribution Analysis")
+                        fig_shap = plt.figure(figsize=(12, 8))
+                        
+                        # Waterfall plot - positive class için
+                        shap.plots.waterfall(shap_values[0, :, 1], show=False)  # İkinci sınıf (churn=1) için SHAP değerlerini kullan
+                        plt.title("Feature Contribution Analysis")
+                        plt.tight_layout()
+                        st.pyplot(fig_shap)
+                        plt.close()
+                        
+                        # SHAP değerlerini tablo olarak göster
+                        shap_df = pd.DataFrame({
+                            'Feature': input_df.columns,
+                            'Feature Value': input_df.iloc[0].values,
+                            'SHAP Value': shap_values.values[0, :, 1]  # İkinci sınıf için SHAP değerlerini kullan
+                        })
+                        shap_df = shap_df.sort_values('SHAP Value', key=abs, ascending=False)
+                        st.write("\n### Feature Impact Values")
+                        st.table(shap_df.style.format({
+                            'SHAP Value': '{:.4f}',
+                            'Feature Value': '{:.2f}'
+                        }))
+
+                    except Exception as e:
+                        st.error(f"SHAP visualization error: {str(e)}")
+                        st.write("Debug info:", e)
                     
         else:
             st.warning("Please make sure all required files exist in the correct locations:")
