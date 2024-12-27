@@ -123,6 +123,7 @@ with st.sidebar:
 try:
     if st.session_state.section == "Homepage":
         import modules.project as project
+        project.home_page()
     elif st.session_state.section == "About DataSet":
         import modules.dataset as dataset
     elif st.session_state.section == "Project Charts":
