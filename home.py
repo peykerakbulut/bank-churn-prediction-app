@@ -1,4 +1,6 @@
 import streamlit as st
+import os
+
 
 # Tüm sayfalardaki config bilgilerini birleştirdik
 st.set_page_config(
@@ -6,7 +8,7 @@ st.set_page_config(
     page_icon="images/data_scientist_badge.png",
     layout="wide",
     initial_sidebar_state="expanded",
-    menu_items={
+    menu_items=None {
 
         "About": "For More Information\n" + "https://data-scientist.ai/",
         "Report a bug": "mailto:peykererkol@gmail.com",
