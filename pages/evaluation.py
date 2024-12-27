@@ -23,7 +23,7 @@ def load_model_and_explainer():
 # Veriyi yükle ve hazırla
 @st.cache_data
 def load_and_prepare_data():
-    df = pd.read_csv("customer_churn_records.csv")
+    df = pd.read_csv("data/customer_churn_records.csv")
     
     # Feature names'i yükle
     with open('models/feature_names.pkl', 'rb') as file:
