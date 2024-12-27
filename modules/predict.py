@@ -33,9 +33,6 @@ def predict_page():
         model, label_encoders = load_model()
         
         if model is not None and label_encoders is not None:
-            # Debug için model özelliklerini yazdır
-            st.write("Model features:", model.feature_names_in_)
-            
             # Input alanları
             col1, col2 = st.columns(2)
             
@@ -82,9 +79,6 @@ def predict_page():
                 categorical_columns = ['Country', 'Gender', 'Card Type']
                 for column in categorical_columns:
                     input_df[column] = label_encoders[column].transform(input_df[column])
-                
-                # Debug için input özelliklerini yazdır
-                st.write("Input features:", input_df.columns.tolist())
                 
                 # Tahmin işlemi
                 prediction = model.predict(input_df)[0]
