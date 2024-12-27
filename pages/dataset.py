@@ -6,7 +6,7 @@ import pandas as pd
 st.title("About Dataset")
 
 # HTML dosyasını oku
-with open('customer_churn_report.html', 'r', encoding='utf-8') as file:
+with open('static/customer_churn_report.html', 'r', encoding='utf-8') as file:
     html_content = file.read()
 
 # HTML'i doğrudan components.html ile göster
