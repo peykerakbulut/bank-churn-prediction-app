@@ -2,19 +2,15 @@ import streamlit as st
 import os
 
 
-# Tüm sayfalardaki config bilgilerini birleştirdik
+# Streamlit'in otomatik menüsünü gizle
 st.set_page_config(
     page_title="Bank Customer Churn Prediction",
     page_icon="images/data_scientist_badge.png",
     layout="wide",
     initial_sidebar_state="expanded",
-    menu_items=None {
-
-        "About": "For More Information\n" + "https://data-scientist.ai/",
-        "Report a bug": "mailto:peykererkol@gmail.com",
-        "Get help": "https://data-scientist.ai/"
-    }
+    menu_items=None  # Bu satırı ekleyelim
 )
+
 
 # Custom CSS for sidebar menu
 st.markdown("""
