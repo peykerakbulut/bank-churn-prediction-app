@@ -11,9 +11,9 @@ import os
 @st.cache_resource
 def load_model_and_explainer():
     try:
-        with open('model.pkl', 'rb') as file:
+        with open('models/model.pkl', 'rb') as file:
             model = pickle.load(file)
-        with open('explainer.pkl', 'rb') as file:
+        with open('models/explainer.pkl', 'rb') as file:
             explainer = pickle.load(file)
         return model, explainer
     except Exception as e:
@@ -26,7 +26,7 @@ def load_and_prepare_data():
     df = pd.read_csv("customer_churn_records.csv")
     
     # Feature names'i yükle
-    with open('feature_names.pkl', 'rb') as file:
+    with open('models/feature_names.pkl', 'rb') as file:
         feature_names = pickle.load(file)
     
     X = df.drop(['Exited', 'RowNumber', 'CustomerId', 'Surname', 'Complain'], axis=1)
@@ -35,7 +35,7 @@ def load_and_prepare_data():
     y = df['Exited']
     
     # Label encoder'ları yükle
-    with open('label_encoders.pkl', 'rb') as file:
+    with open('models/label_encoders.pkl', 'rb') as file:
         label_encoders = pickle.load(file)
     
     # Kategorik değişkenleri dönüştür
