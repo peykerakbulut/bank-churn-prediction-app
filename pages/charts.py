@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 color_theme = ['#2E86C1', '#ffbd59']  # Mavi ve Sarı
 
 # Veriyi oku
-df = pd.read_csv("customer_churn_records.csv")
+df = pd.read_csv("data/customer_churn_records.csv")
 
 st.title("Customer Churn Analysis")
 
