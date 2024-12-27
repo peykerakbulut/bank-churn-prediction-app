@@ -98,8 +98,6 @@ with st.sidebar:
     st.image("images/data_scientist_logo.png", width=250)
     st.markdown('</div>', unsafe_allow_html=True)
     
-    
-    
     # Navigation menüsü
     menu_items = {
         "Homepage": "🏠",
@@ -126,10 +124,13 @@ try:
         project.home_page()
     elif st.session_state.section == "About DataSet":
         import modules.dataset as dataset
+        dataset.dataset_page()
     elif st.session_state.section == "Project Charts":
         import modules.charts as charts
+        charts.charts_page()
     elif st.session_state.section == "Evaluation":
         import modules.evaluation as evaluation
+        evaluation.evaluation_page()
     elif st.session_state.section == "Prediction":
         import modules.predict as predict
         predict.predict_page()
