@@ -104,7 +104,8 @@ with st.sidebar:
         "About DataSet": "📊",
         "Project Charts": "📈",
         "Evaluation": "📋",
-        "Prediction": "🎯"
+        "Single Prediction": "🎯",
+        "Batch Prediction": "📥"
     }
     
     # Initialize session state for section if not exists
@@ -131,8 +132,11 @@ try:
     elif st.session_state.section == "Evaluation":
         import modules.evaluation as evaluation
         evaluation.evaluation_page()
-    elif st.session_state.section == "Prediction":
+    elif st.session_state.section == "Single Prediction":
         import modules.predict as predict
         predict.predict_page()
+    elif st.session_state.section == "Batch Prediction":
+        import modules.batch as batch
+        batch.batch_page()
 except Exception as e:
     st.error(f"Hata: {e}")
