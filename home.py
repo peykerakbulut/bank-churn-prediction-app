@@ -1,5 +1,6 @@
 import streamlit as st
 import os
+from streamlit_option_menu import option_menu
 
 
 # Streamlit'in otomatik menüsünü gizle
@@ -24,60 +25,10 @@ st.markdown("""
         padding: 1rem;
     }
     
-    .main-menu {
-        font-size: 24px;
-        margin: 20px 0;
-        padding: 10px;
-        color: #31333F;
-        font-weight: 500;
-    }
-
-    /* Buton stilini özelleştir */
-    .stButton > button {
-        width: 100%;
-        border-radius: 10px !important;
-        padding: 15px 20px !important;
-        border: none !important;
-        background-color: white !important;
-        color: #31333F !important;
-        font-weight: normal !important;
-        transition: all 0.3s ease;
-    }
-
-    /* Buton içeriğini sola yasla */
-    .stButton > button p {
-        text-align: left !important;
-        display: flex !important;
-        align-items: left !important;
-        justify-content: flex-start !important;
-        margin: 0 !important;
-    }
-
-    /* Aktif menü */
-    .stButton > button:active, .stButton > button:focus {
-        background-color: #ffbd59 !important;
-        color: #000000 !important;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
-    }
-
-    /* Hover efekti */
-    .stButton > button:hover {
-        background-color: #F0F2F6 !important;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
-    }
-    
     .logo-container {
         padding: 5px 0;
         margin-top: -35px;
         text-align: center;
-    }
-
-    /* İkon ve metin arasındaki boşluğu ayarla */
-    .stButton > button div {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: flex-start !important;
-        gap: 10px !important;
     }
 
     /* Varsayılan menüyü gizle */
@@ -99,24 +50,52 @@ with st.sidebar:
     st.markdown('</div>', unsafe_allow_html=True)
     
     # Navigation menüsü
-    menu_items = {
-        "Homepage": "🏠",
-        "About DataSet": "📊",
-        "Project Charts": "📈",
-        "Evaluation": "📋",
-        "Single Prediction": "🎯",
-        "Batch Prediction": "📥"
-    }
-    
+    selected = option_menu(
+        menu_title=None,
+        options=[
+            "Homepage", 
+            "About DataSet", 
+            "Project Charts",
+            "Evaluation",
+            "Single Prediction",
+            "Batch Prediction"
+        ],
+        icons=[
+            'house-fill',  # Homepage
+            'database-fill',  # About DataSet
+            'graph-up',  # Project Charts 
+            'clipboard-data',  # Evaluation
+            'bullseye',  # Single Prediction
+            'cloud-upload',  # Batch Prediction
+        ],
+        menu_icon="cast",
+        default_index=0,
+        styles={
+            "container": {"padding": "0!important", "background-color": "#eff2f6"},
+            "icon": {"color": "#31333F", "font-size": "16px"}, 
+            "nav-link": {
+                "font-size": "16px",
+                "text-align": "left",
+                "margin": "0px",
+                "padding": "15px 20px",
+                "--hover-color": "#F0F2F6",
+                "background-color": "white",
+                "margin-bottom": "5px",
+                "border-radius": "10px",
+            },
+            "nav-link-selected": {
+                "background-color": "#ffbd59",
+                "color": "#000000",
+            },
+        }
+    )
+
     # Initialize session state for section if not exists
     if 'section' not in st.session_state:
         st.session_state.section = "Homepage"
     
-    # Navigation buttons
-    for page, icon in menu_items.items():
-        if st.sidebar.button(f"{icon} {page}", key=page, use_container_width=True):
-            st.session_state.section = page
-
+    # Update session state based on selection
+    st.session_state.section = selected
 
 # Sayfa yönlendirmesi
 try:
